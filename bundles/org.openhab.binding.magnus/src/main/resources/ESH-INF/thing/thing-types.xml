@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="magnus"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:thing="https://openhab.org/schemas/thing-description/v1.0.0"
+	xsi:schemaLocation="https://openhab.org/schemas/thing-description/v1.0.0 https://openhab.org/schemas/thing-description-1.0.0.xsd">
+
+	<!-- Fan Controller Thing Type -->
+	<thing-type id="fan_controller">
+		<label>Magnus Binding Thing</label>
+		<description>Sample thing for Magnus Binding</description>
+
+		<channels>
+			<channel id="fan_controller-power" typeId="fan-power"/>
+			<channel id="fan_controller-speed" typeId="fan-speed"/>
+			<channel id="fan_controller-timer" typeId="fan-timer"/>
+			<channel id="fan_controller-oscillate" typeId="fan-oscillate"/>
+			<channel id="fan_controller-oscillate_speed" typeId="fan-oscillate_speed"/>
+		</channels>
+
+		<config-description>
+			<parameter name="authentication_key" type="text" required="true">
+				<label>Authentication Key</label>
+				<description>Authorizes access to manipulate the device</description>
+			</parameter>
+
+			<parameter name="refresh" type="integer" required="false">
+				<label>Refresh Interval</label>
+				<description>Specifies the refresh interval in seconds</description>
+				<default>5</default>
+			</parameter>
+		</config-description>
+
+	</thing-type>
+
+	<channel-type id="fan-power">
+		<item-type>Switch</item-type>
+		<label>Power</label>
+		<description>Turn on or off the fan</description>
+	</channel-type>
+
+	<channel-type id="fan-speed">
+		<item-type>Dimmer</item-type>
+		<label>Speed</label>
+		<description>The speed of the fan</description>
+	</channel-type>
+
+	<channel-type id="fan-timer">
+		<item-type>Number</item-type>
+		<label>Auto-Off Timer</label>
+		<description>The time until the device turns off</description>
+	</channel-type>
+
+	<channel-type id="fan-oscillate">
+		<item-type>Switch</item-type>
+		<label>Oscillate</label>
+		<description>Turn on or off oscillation</description>
+	</channel-type>
+
+	<channel-type id="fan-oscillate_speed">
+		<item-type>Dimmer</item-type>
+		<label>Oscillation Speed</label>
+		<description>The oscillation speed</description>
+	</channel-type>
+
+</thing:thing-descriptions>
