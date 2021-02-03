@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="magnus"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:thing="https://openhab.org/schemas/thing-description/v1.0.0"
+	xsi:schemaLocation="https://openhab.org/schemas/thing-description/v1.0.0 https://openhab.org/schemas/thing-description-1.0.0.xsd">
+
+	<!-- Fan Controller Thing Type -->
+	<thing-type id="fan-controller">
+		<label>Magnus Binding Thing</label>
+		<description>Sample thing for Magnus Binding</description>
+
+		<channels>
+			<channel id="channel1" typeId="sample-channel"/>
+		</channels>
+
+		<config-description>
+			<parameter name="config1" type="text" required="true">
+				<label>Sample Parameter</label>
+				<description>This is a sample text configuration parameter</description>
+			</parameter>
+		</config-description>
+
+	</thing-type>
+
+	<!-- Power Channel Type -->
+	<channel-type id="fan-controller-channel-power">
+		<item-type>FanController</item-type>
+		<label>Magnus Binding Channel</label>
+		<description>Sample channel for Magnus Binding</description>
+	</channel-type>
+
+</thing:thing-descriptions>

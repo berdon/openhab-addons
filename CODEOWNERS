@@ -262,6 +262,7 @@
 /bundles/org.openhab.binding.teleinfo/ @Nokyyz
 /bundles/org.openhab.binding.tellstick/ @openhab/add-ons-maintainers
 /bundles/org.openhab.binding.tesla/ @kgoderis
+/bundles/org.openhab.binding.magnus/ @berdon
 /bundles/org.openhab.binding.tibber/ @kjoglum
 /bundles/org.openhab.binding.tivo/ @mlobstein
 /bundles/org.openhab.binding.touchwand/ @roieg
