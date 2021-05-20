@@ -90,15 +90,29 @@ public class MagnusFanControllerHandler extends BaseThingHandler {
             HandleSpeedCommand(channelUID, command);
         } else if (FanController.Channels.RW_OSCILLATE_SPEED.equals(channelUID.getId())) {
             HandleOscillateSpeedCommand(channelUID, command);
+        } else if (FanController.Channels.RW_TIMER.equals(channelUID.getId())) {
+            HandleTimerCommand(channelUID, command);
         }
 
         // Resume polling
         initPolling(0);
     }
 
+    private void HandleTimerCommand(ChannelUID channelUID, Command command) {
+        if (command instanceof RefreshType) {
+            RefreshStatus(true);
+        } else if (command instanceof PercentType) {
+            double value = ((PercentType) command).doubleValue();
+            logger.info("Setting fan {} timer to {}%", thing.getUID(), value);
+            ParseStatus(postUrl("/timer/" + value, TIMEOUT_SECONDS));
+        } else {
+            logger.info("Unknown command");
+        }
+    }
+
     private void HandleOscillateSpeedCommand(ChannelUID channelUID, Command command) {
         if (command instanceof RefreshType) {
-            RefreshStatus();
+            RefreshStatus(true);
         } else if (command instanceof PercentType) {
             @Nullable
             MagnusFanStatus response = null;
@@ -118,7 +132,7 @@ public class MagnusFanControllerHandler extends BaseThingHandler {
 
     private void HandleSpeedCommand(ChannelUID channelUID, Command command) {
         if (command instanceof RefreshType) {
-            RefreshStatus();
+            RefreshStatus(true);
         } else if (command instanceof PercentType) {
             @Nullable
             MagnusFanStatus response = null;
@@ -137,7 +151,7 @@ public class MagnusFanControllerHandler extends BaseThingHandler {
 
     private void HandleOscillateCommand(Command command) {
         if (command instanceof RefreshType) {
-            RefreshStatus();
+            RefreshStatus(true);
         } else if (command == OnOffType.ON) {
             logger.info("Turning fan oscillation {} on", thing.getUID());
             postUrl("/oscillate/on", TIMEOUT_SECONDS);
@@ -151,7 +165,7 @@ public class MagnusFanControllerHandler extends BaseThingHandler {
 
     private void HandlePowerCommand(Command command) {
         if (command instanceof RefreshType) {
-            RefreshStatus();
+            RefreshStatus(true);
         } else if (command == OnOffType.ON) {
             logger.info("Turning fan {} on", thing.getUID());
             String response = postUrl("/power/on", TIMEOUT_SECONDS);
@@ -201,6 +215,11 @@ public class MagnusFanControllerHandler extends BaseThingHandler {
 
     @Nullable
     private MagnusFanStatus RefreshStatus() {
+        return RefreshStatus(false);
+    }
+
+    @Nullable
+    private MagnusFanStatus RefreshStatus(boolean forceRefresh) {
         MagnusFanStatus oldStatus = status;
         status = GetStatus();
 
@@ -213,6 +232,7 @@ public class MagnusFanControllerHandler extends BaseThingHandler {
             updateState(FanController.Channels.RW_SPEED, ConvertSpeedToPercent(status.Speed));
             updateState(FanController.Channels.RW_OSCILLATE_SPEED,
                     ConvertOscillateSpeedToPercent(status.OscillateSpeed));
+            updateState(FanController.Channels.RW_TIMER, new PercentType(status.Timer));
         }
 
         return status;

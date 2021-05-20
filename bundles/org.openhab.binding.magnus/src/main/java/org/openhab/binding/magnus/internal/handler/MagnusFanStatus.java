@@ -30,6 +30,8 @@ public class MagnusFanStatus {
     public Boolean Oscillate;
     @SerializedName("oscillate_speed")
     public Integer OscillateSpeed;
+    @SerializedName("timer")
+    public Integer Timer;
 
     @Override
     public boolean equals(Object o) {
@@ -46,7 +48,7 @@ public class MagnusFanStatus {
 
     @Override
     public int hashCode() {
-        return Objects.hash(Power, Speed, Oscillate, OscillateSpeed);
+        return Objects.hash(Power, Speed.intValue(), Oscillate, OscillateSpeed.intValue());
     }
 
     @Override
